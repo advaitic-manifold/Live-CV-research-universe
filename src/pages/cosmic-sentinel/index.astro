@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import Pipeline from '../../components/react/Pipeline';
+---
+<Base title="COSMIC SENTINEL — Manav Patel" description="Cosmic Sentinel Engine: Fisher–Rao geometry, optimal transport, flow matching and MPS Born machines with surrogate-calibrated consensus.">
+  <div class="wrap">
+    <h1 style="font-size:2.4rem">COSMIC SENTINEL</h1>
+    <p>The Cosmic Sentinel Engine fuses four paradigms and calibrates the result against phase-randomized surrogates. Select a stage; every number comes from the paper. <a href={`${import.meta.env.BASE_URL}publications/cosmic-sentinel-engine/`}>Paper page and limits</a>.</p>
+    <Pipeline client:visible />
+  </div>
+</Base>

@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { papers } from '../../data/site';
+import MpsBorn from '../../components/react/MpsBorn';
+import FlowMatchingDemo from '../../components/react/FlowMatchingDemo';
+export function getStaticPaths() { return papers.map(p => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const ld = { '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: p.title,
+  author: p.authors.split(', ').map((n: string) => ({ '@type': 'Person', name: n })), keywords: p.keywords.join(', ') };
+---
+<Base title={`${p.title} — Manav Patel`} description={p.summary.slice(0, 155)} jsonLd={ld}>
+  <div class="wrap">
+    <p class="mono"><a href={`${base}#publications`}>← Publications</a></p>
+    <h1 style="font-size:2rem">{p.title}</h1>
+    <p class="mono">{p.authors}<br />{p.venue} · {p.status}</p>
+    <div class="panel"><p>{p.summary}</p></div>
+    <div class="hls">{p.highlights.map(h => (<div><b>{h.v}</b><span class="mono">{h.k}</span></div>))}</div>
+    <h2 class="mono" style="color:var(--gold)">Limits stated by the paper</h2>
+    <ul>{p.limits.map(l => <li>{l}</li>)}</ul>
+    {(p.slug === 'continuous-neural-fields-flow-matching' || p.slug === 'cosmic-sentinel-engine') && <FlowMatchingDemo client:visible />}
+    {(p.slug === 'mps-born-machines' || p.slug === 'cosmic-sentinel-engine') && <MpsBorn client:visible />}
+    <p class="mono">Keywords: {p.keywords.join(', ')}</p>
+    <p class="mono">DOI · BibTeX · code · PDF: [REAL DATA REQUIRED]</p>
+  </div>
+</Base>
+
+<style>.hls{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;margin:1.5rem 0}.hls b{display:block;font-size:1.6rem;font-weight:500;color:var(--cyan)}.hls span{display:block}</style>

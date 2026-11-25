@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import OrbitalSim from '../components/react/OrbitalSim';
+---
+<Base title="Orbital dynamics kernel — Manav Patel" description="N-body orbital mechanics with J2 and 1PN terms, running in a Rust/WebAssembly kernel." bg={false}>
+  <div class="wrap">
+    <h1 style="font-size:2.2rem">Orbital dynamics kernel</h1>
+    <p>3,000 test bodies orbit a central mass. Per body: point-mass gravity, the J2 zonal harmonic, a first post-Newtonian (1PN) Schwarzschild correction, and softened mutual gravity. Integration is velocity Verlet in f64; positions are shared with Three.js through a Float32Array over WebAssembly memory (no copy). The HUD shows which kernel is running and the energy drift.</p>
+    <OrbitalSim client:only="react" />
+    <p class="mono">Equations (μ = 1, R = 1, axis z). J2: a = −(3/2) J2 R² / r⁵ · [x(1 − 5z²/r²), y(1 − 5z²/r²), z(3 − 5z²/r²)]. 1PN: a = μ/(c²r³) · [(4μ/r − v²) r + 4 (r·v) v]. Effects to look for: J2 makes inclined orbital planes precess (nodal regression); 1PN makes ellipses precess in-plane.</p>
+    <p class="mono">Scope: J3–J6, SPICE ephemerides, real-body data and IAU frame transformations are not implemented. Initial conditions are random near-circular orbits, not real objects.</p>
+  </div>
+</Base>

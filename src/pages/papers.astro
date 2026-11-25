@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Gargantua from '../components/react/Gargantua';
+import { papers } from '../data/site';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="The Archive — Manav Patel" description="Five research papers on reproducible ML, flow matching, tensor networks and astronomical imaging." bg={false}>
+  <Gargantua client:only="react" />
+  <div class="arch">
+    <header class="intro">
+      <p class="mono">THE ARCHIVE · 5 TRANSMISSIONS</p>
+      <h1>Falling toward what the data can honestly say.</h1>
+      <p>Scroll to descend. The black hole behind is a real-time Schwarzschild geodesic ray tracer; the papers in front are mine.</p>
+    </header>
+    {papers.map((p, i) => (
+      <section class="tx">
+        <p class="mono">TRANSMISSION 0{i + 1} / 05 · {p.status.toUpperCase()} · {p.venue}</p>
+        <h2>{p.title.split(':')[0]}</h2>
+        <p class="lead">{p.summary}</p>
+        <div class="hls">{p.highlights.map(h => (<div><b>{h.v}</b><span class="mono">{h.k}</span></div>))}</div>
+        <p><a href={`${base}publications/${p.slug}/`}>Read the paper page, its stated limits{(i === 2 || i === 3 || i === 4) ? ' and a live demo' : ''} →</a></p>
+      </section>
+    ))}
+    <footer class="tx"><p class="mono">All figures are quoted from the papers. Status and venues follow the CV.</p></footer>
+  </div>
+</Base>
+<style>
+  .arch { position: relative; z-index: 1; }
+  .intro, .tx { min-height: 100vh; max-width: 46rem; margin: 0 auto; padding: 18vh 1.4rem 6vh; display: flex; flex-direction: column; justify-content: center; }
+  .intro h1 { font-weight: 200; letter-spacing: -.01em; font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.08; }
+  .tx h2 { font-weight: 200; font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: .02em; margin: .2em 0 .5em; }
+  .lead { font-size: 1.1rem; color: #c9d1e2; text-shadow: 0 0 12px #000; }
+  .hls { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.2rem; margin: 1.5rem 0; }
+  .hls b { display: block; font-weight: 300; font-size: 1.7rem; color: #f1d9a8; }
+  .hls span { display: block; color: #aab4c8; text-shadow: 0 0 8px #000; }
+  .intro, .tx p, .tx h2 { text-shadow: 0 0 18px #000, 0 0 4px #000; }
+</style>

@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import RelativisticBH from '../components/react/RelativisticBH';
+---
+<Base title="Relativistic ray tracing — Manav Patel" description="Real-time Schwarzschild geodesic ray tracing of a black hole with an accretion disc." bg={false}>
+  <div class="wrap">
+    <h1 style="font-size:2.2rem">Schwarzschild geodesic ray tracer</h1>
+    <p>Every pixel traces a light ray backwards from the camera by integrating the photon orbit equation d²u/dφ² + u = (3/2) r_s u² (u = 1/r). Rays either fall in (black shadow), or escape to the sky, bent by gravity (the Einstein ring and mirrored sky arcs), or cross the accretion disc, possibly several times (the thin ring images above and below the shadow). Drag to orbit.</p>
+    <RelativisticBH client:only="react" />
+    <p class="mono">Disc emission: T(r) ∝ r^(−3/4)[1 − √(3/r)]^(1/4); redshift factor g = √(1 − r_s/r) · √(1 − v²) / (1 − v·n), v = √(r_s / (2(r − r_s))); observed intensity ∝ g⁴T⁴. The bright side is the approaching side.</p>
+    <p class="mono">Scope: non-spinning (Schwarzschild) only; Kerr is not implemented. Procedural sky, not a star catalogue. The disc model is schematic, not a fit to any source.</p>
+  </div>
+</Base>
